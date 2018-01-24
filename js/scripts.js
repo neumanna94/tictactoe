@@ -1,6 +1,7 @@
 
-function Player(playerNameIn){
+function Player(playerNameIn, chararacter){
   this.name = playerNameIn;
+  this.charForGame = character;
   this.wins = 0;
   this.losses = 0;
   this.draws = 0;
@@ -19,28 +20,41 @@ Board.prototype.move=function(row, column, selector){
     }
   }
 }
-
 Board.prototype.checkForWin=function(){
-  var winState = true;
+  var lDiagonal = true;
+  var rDiagonal = true;
+  var rowState = true;
+  var colState = true;
   for(var i = 0; i < 3; i ++){
+    console.log("First Element:" +  this.board[2][0] + "other:" + this.board[2-i][i]);
+    console.log();
     //Check Diagonals
-    if(this.board[0][0] !== this.board[i][i] && this.board[0][0] == null){
-      winState = false;
-    } else if(this.board[2][0] !== this.board[2-i][i] && this.board[2][0]!== null){
-      winState = false;
+    if(this.board[0][0] != this.board[i][i] || this.board[0][0] != null){
+      lDiagonal = false;
+    }
+    if(this.board[2][0] != this.board[2-i][i] || this.board[2][0] !=null){
+      rDiagonal= false;
     }
     for(var j = 1; j < 3; j ++){
-      console.log(this.board[i][j]);
       //Check Rows
-      if(this.board[i][0] !== this.board[i][j] && this.board[i][0] !==null){
-        winState = false;
+      if(this.board[i][0] != this.board[i][j]){
+        rowState = false;
       //Check Columns
-      } else if(this.board[j][0] !== this.board[j][i] && this.board[j][0]!==null){
-        winState = false;
+      }
+      if(this.board[0][i] != this.board[j][i]){
+        colState = false;
       }
     }
   }
-  return winState;
+  console.log(lDiagonal)
+  console.log(rDiagonal);
+  console.log(rowState);
+  console.log(colState);
+    if(lDiagonal || rDiagonal || rowState || colState){
+      return true;
+    } else {
+      return false;
+    }
 }
 function createMatrix(rows,columns){
   var outputMatrix = [];
