@@ -83,79 +83,75 @@ function updateTurn(){
     return "X";
   }
 }
-function printBoard(){
-  for (var i = 0; i < 3; i ++){
-    for (var j = 0; j < 3; j ++){
-      displayedBoard[i][j];
-    }
-  }
-
-}
 
 
 var displayedBoard = new Board();
 var currentTurn = 0; //O is Even turns, X is Odd Turns
 
-  var boardOne = new Board();
-  boardOne.move(0,0,0);
-  boardOne.move(0,1,0);
-  boardOne.move(0,2,0);
+function writeBoard(){
+  $( ".col-md-4" ).find("p").each(function( index ) {
+    var selector = $(this).text();
+    if(selector == "O"){
+      selector = 0;
+    } else if(selector == "X"){
+      selector = 1;
+    }
+    console.log(Math.floor(index/3) + ", " + index%3);
+    displayedBoard.move(Math.floor(index/3),index%3,selector);
+  });
+}
 
-  var boardTwo = new Board();
-  boardTwo.move(0,0,0);
-  boardTwo.move(1,1,0);
-  boardTwo.move(2,2,0);
-
-  var boardThree = new Board();
-  boardThree.move(0,0,0);
-  boardThree.move(1,0,0);
-  boardThree.move(2,0,0);
-
-  var boardFour = new Board();
-  boardFour.move(0,0,1);
-  boardFour.move(1,0,1);
-  boardFour.move(2,0,0);
-  var boardFive = new Board();
-  boardFive.move(0,0,0);
-  boardFive.move(1,0,0);
-  boardFive.move(2,0,1);
-  var boardSix = new Board();
-  boardSix.move(0,0,1);
-  boardSix.move(1,0,1);
-  boardSix.move(2,0,1);
-  var boardSeven = new Board();
-  boardSeven.move(2,0,0);
-  boardSeven.move(1,1,0);
-  boardSeven.move(0,2,1);
-  var boardEight = new Board();
-  boardEight.move(2,0,1);
-  boardEight.move(1,1,0);
-  boardEight.move(0,2,1);
-
-
+function displayBoard(){
+  $( ".col-md-4" ).find("p").each(function( index ) {
+  var currentValue = displayedBoard.board[Math.floor(index/3)][index%3];
+  $(this).text("");
+  $(this).find("p").append(currentValue);
+  });
+}
 
   $(document).ready(function(){
     $(".col-md-4").click(function(){
       $(this).text(this);
     });
 
-    $( ".col-md-4" ).each(function( index ) {
-      var row = 0;
-      var column = 0;
-      var j = 0;
 
-      for(var i = 0; i < index; i ++){
-        var selector = $( this ).text();
-        if(selector == "O"){
-          selector = 0;
-        } else if(selector == "X"){
-          selector = 1;
-        }
-        displayedBoard.move(j,i%3,selector);
-        j = Math.floor(i/3);
-      }
-    });
     $(".restart").click(function(){
       displayedBoard = new Board();
     })
 });
+
+// var boardOne = new Board();
+// boardOne.move(0,0,0);
+// boardOne.move(0,1,0);
+// boardOne.move(0,2,0);
+//
+// var boardTwo = new Board();
+// boardTwo.move(0,0,0);
+// boardTwo.move(1,1,0);
+// boardTwo.move(2,2,0);
+//
+// var boardThree = new Board();
+// boardThree.move(0,0,0);
+// boardThree.move(1,0,0);
+// boardThree.move(2,0,0);
+//
+// var boardFour = new Board();
+// boardFour.move(0,0,1);
+// boardFour.move(1,0,1);
+// boardFour.move(2,0,0);
+// var boardFive = new Board();
+// boardFive.move(0,0,0);
+// boardFive.move(1,0,0);
+// boardFive.move(2,0,1);
+// var boardSix = new Board();
+// boardSix.move(0,0,1);
+// boardSix.move(1,0,1);
+// boardSix.move(2,0,1);
+// var boardSeven = new Board();
+// boardSeven.move(2,0,0);
+// boardSeven.move(1,1,0);
+// boardSeven.move(0,2,1);
+// var boardEight = new Board();
+// boardEight.move(2,0,1);
+// boardEight.move(1,1,0);
+// boardEight.move(0,2,1);
