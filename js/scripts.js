@@ -21,7 +21,6 @@ Board.prototype.move=function(row, column, selector){
   }
 }
 
-
 Board.prototype.checkForWin=function(){
   var lDiagonal = true;
   var rDiagonal = true;
@@ -109,8 +108,19 @@ function settings(){
 }
 
 var displayedBoard = new Board();
-var currentTurn = 0; //O is Even turns, X is Odd Turns
 var difficulty = 0;
+
+function determineTurn(){
+  var turnNumber = 0;
+  for(var i = 0;i < 3; i++){
+    for(var j = 0; j < 3; j++){
+      if(displayedBoard.board[i][j] != null){
+        turnNumber ++;
+      }
+    }
+  }
+  return turnNumber;
+}
 
 function easyAI(characterToPlace){
   var currI = Math.floor(Math.random() * Math.floor(3));
@@ -133,23 +143,22 @@ $(document).ready(function(){
   $(".col-md-4").click(function(){
     if($(this).find("p").text() == "X" ||$(this).find("p").text() == "O"){
     } else {
-      var currTurn = updateTurn(currentTurn);
-      var currHeader = updateTurn(currentTurn);
+      var currTurn = updateTurn(determineTurn());
+      var currHeader = updateTurn(determineTurn());
       $("h5").text("Current Turn: " + currHeader);
       $(this).find("p").text(currTurn);
-      if(currentTurn%2 == 0){
+      if(determineTurn()%2 == 0){
         easyAI("O");
-      } else if(currentTurn%2 != 0){
+      } else if(determineTurn()%2 != 0){
         easyAI("X");
+      } else if(determineTurn() == 9){
+        alert("Draw!");
       }
-      currentTurn += 2;
     }
     writeBoard();
     displayBoard();
-    if(displayedBoard.checkForWin() && currentTurn%2 != 0){
-      alert(updateTurn(currentTurn + 1) + " Wins!");
-    } else if(displayedBoard.checkForWin() && currentTurn%2 == 0){
-      alert(updateTurn(currentTurn + 1 ) + " Wins!");
+    if(displayedBoard.checkForWin()){
+      alert(updateTurn(determineTurn()) + " Wins!");
     }
   });
 });

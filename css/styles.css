@@ -1,9 +1,11 @@
 body {
-background-color: grey;
+background-color:#558C89;
+color: white;
 }
 
 .jumbotron {
   text-align:center;
+  background-color: #74AFAD;
 }
 .jumbotron li {
   float: left;
@@ -11,6 +13,12 @@ background-color: grey;
   margin-top: 1%;
   margin-left: 18%;
   padding-left: 2%;
+}
+.jumbotron li a {
+  color: white;
+}
+.jumbotron li a:hover {
+  color:red;
 }
 .jumbotron li:hover {
   color:red;
@@ -21,13 +29,14 @@ background-color: grey;
   text-align: center;
   width: 1000px;
   height: 200px;
-  background-color: #ff6600;
+  background-color: #ECECEA;
   color: white;
 }
 
 .col-md-4 p {
+  color:#D9853B;
   margin-top: 20%;
-  font-size: 50px;
+  font-size: 60px;
 }
 .form-control {
   width: 25%;
@@ -35,10 +44,16 @@ background-color: grey;
 }
 
 h4 {
+  color: white;
   text-align: center;
+  font-size: 50px;
 }
 h5 {
+  color: white;
   text-align: center;
+}
+h6 {
+  color:white;
 }
 
 .restart {
