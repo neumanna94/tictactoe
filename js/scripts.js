@@ -27,32 +27,31 @@ Board.prototype.checkForWin=function(){
   var colState = true;
   for(var i = 0; i < 3; i ++){
     //Check Diagonals
-    if(this.board[0][0] != this.board[i][i]){
+    if(this.board[0][0] != this.board[i][i] || this.board[0][0] == null){
       lDiagonal = false;
     }
-    if(this.board[2][0] != this.board[2-i][i]){
+    if(this.board[2][0] != this.board[2-i][i] || this.board[2][0] == null){
       rDiagonal= false;
     }
     for(var j = 0; j < 3; j ++){
       //Check Rows
-      if(this.board[i][0] != this.board[i][j]){
+      if(this.board[i][0] != this.board[i][j] || this.board[i][0] == null){
         rowState = false;
       //Check Columns
       }
-      if(this.board[0][i] != this.board[j][i]){
+      if(this.board[0][i] != this.board[j][i] || this.board[0][i] == null){
         colState = false;
       }
     }
+    if(colState || rowState) {
+      return true;
     }
-    console.log(lDiagonal);
-    console.log(rDiagonal);
+    }
     console.log(rowState);
     console.log(colState);
-    if(lDiagonal||rDiagonal||rowState||colState){
-      return true;
-    } else {
-      return false;
-    }
+    console.log(lDiagonal);
+    console.log(rDiagonal);
+    return (lDiagonal || rDiagonal);
 }
 function createMatrix(rows,columns){
   var outputMatrix = [];
@@ -125,6 +124,9 @@ $(document).ready(function(){
   $("form#settings").change(function() {
     settings();
   });
+  $(".restart").click(function(){
+    settings();
+  });
 
   $(".col-md-4").click(function(){
     if($(this).find("p").text() == "X" ||$(this).find("p").text() == "O"){
@@ -133,45 +135,43 @@ $(document).ready(function(){
       var currHeader = updateTurn(currentTurn+1);
       $("h5").text("Current Turn: " + currHeader);
       $(this).find("p").text(currTurn);
+      if(displayedBoard.checkForWin() == true){
+        alert(currTurn + " Wins!");
+      }
       currentTurn ++;
     }
     writeBoard();
   });
-
-  $(".restart").click(function(){
-    settings();
-  })
 });
-
-// var one = new Board()
-// one.move(0,0,0);
-// one.move(0,1,0);
-// one.move(0,2,0);
-// var two = new Board()
-// two.move(0,0,1);
-// two.move(0,1,0);
-// two.move(0,2,1);
-// var three = new Board()
-// three.move(0,0,1);
-// three.move(1,1,0);
-// three.move(2,2,1);
-// var four = new Board()
-// four.move(0,0,1);
-// four.move(1,1,1);
-// four.move(2,2,1);
-// var five = new Board()
-// five.move(2,0,1);
-// five.move(1,1,0);
-// five.move(0,2,1);
-// var six = new Board()
-// six.move(2,0,1);
-// six.move(1,1,1);
-// six.move(0,2,1);
-// var seven = new Board()
-// seven.move(0,0,1);
-// seven.move(1,0,0);
-// seven.move(2,0,1);
-// var eight = new Board()
-// eight.move(0,0,1);
-// eight.move(1,1,1);
-// eight.move(2,2,1);
+var one = new Board()
+one.move(0,0,0);
+one.move(0,1,0);
+one.move(0,2,0);
+var two = new Board()
+two.move(0,0,1);
+two.move(0,1,0);
+two.move(0,2,1);
+var three = new Board()
+three.move(0,0,1);
+three.move(1,1,0);
+three.move(2,2,1);
+var four = new Board()
+four.move(0,0,1);
+four.move(1,1,1);
+four.move(2,2,1);
+var five = new Board()
+five.move(2,0,1);
+five.move(1,1,0);
+five.move(0,2,1);
+var six = new Board()
+six.move(2,0,1);
+six.move(1,1,1);
+six.move(0,2,1);
+var seven = new Board()
+seven.move(0,0,1);
+seven.move(1,0,0);
+seven.move(2,0,1);
+var eight = new Board()
+eight.move(0,0,1);
+eight.move(1,1,1);
+eight.move(2,2,1);
