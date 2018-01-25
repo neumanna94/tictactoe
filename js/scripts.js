@@ -9,23 +9,25 @@ function Board(){
 }
 Board.prototype.move=function(row, column, selector){
   if(this.board[row][column] == null){
-    if(selector == 0){
+    if(selector == 0 || selector == "O"){
       this.board[row][column] = "O";
-    } else if(selector == 1){
+    } else if(selector == 1 || selector == "X"){
       this.board[row][column] = "X";
     } else if(selector == 2){
       this.board[row][column] = null;
     } else {
-    return "position already taken.";
+      return "position already taken.";
     }
   }
 }
+
+
 Board.prototype.checkForWin=function(){
   var lDiagonal = true;
   var rDiagonal = true;
-  var rowState = true;
-  var colState = true;
   for(var i = 0; i < 3; i ++){
+    var rowState = true;
+    var colState = true;
     //Check Diagonals
     if(this.board[0][0] != this.board[i][i] || this.board[0][0] == null){
       lDiagonal = false;
@@ -37,21 +39,18 @@ Board.prototype.checkForWin=function(){
       //Check Rows
       if(this.board[i][0] != this.board[i][j] || this.board[i][0] == null){
         rowState = false;
-      //Check Columns
+        //Check Columns
       }
       if(this.board[0][i] != this.board[j][i] || this.board[0][i] == null){
         colState = false;
       }
     }
-    if(colState || rowState) {
+    if(colState == true || rowState == true) {
       return true;
     }
-    }
-    console.log(rowState);
-    console.log(colState);
-    console.log(lDiagonal);
-    console.log(rDiagonal);
-    return (lDiagonal || rDiagonal);
+  }
+
+  return (lDiagonal || rDiagonal);
 }
 function createMatrix(rows,columns){
   var outputMatrix = [];
@@ -62,14 +61,6 @@ function createMatrix(rows,columns){
     }
   }
   return outputMatrix;
-}
-function checkRowForWin(inputArray){
-  for(var i=1; i < input.length; i++){
-    if(inputArray[i] !== inputArray[0] && inputArray[0] !== null){
-      return false;
-    }
-  }
-  return inputArray[0];
 }
 function updateTurn(counter){
   if(counter%2 === 0){
@@ -93,9 +84,9 @@ function writeBoard(){
 }
 function displayBoard(){
   $( ".col-md-4" ).find("p").each(function( index ) {
-  var currentValue = displayedBoard.board[Math.floor(index/3)][index%3];
-  $(this).text("");
-  $(this).find("p").append(currentValue);
+    var currentValue = displayedBoard.board[Math.floor(index/3)][index%3];
+    $(this).text("");
+    $(this).append(currentValue);
   });
 }
 function settings(){
@@ -120,6 +111,17 @@ function settings(){
 var displayedBoard = new Board();
 var currentTurn = 0; //O is Even turns, X is Odd Turns
 var difficulty = 0;
+
+function easyAI(characterToPlace){
+  var currI = Math.floor(Math.random() * Math.floor(3));
+  var currJ = Math.floor(Math.random() * Math.floor(3));
+  while(displayedBoard.board[currI][currJ] != null){
+    currI = Math.floor(Math.random() * Math.floor(3));
+    currJ = Math.floor(Math.random() * Math.floor(3));
+  }
+  displayedBoard.move(currI, currJ, characterToPlace);
+}
+
 $(document).ready(function(){
   $("form#settings").change(function() {
     settings();
@@ -132,46 +134,58 @@ $(document).ready(function(){
     if($(this).find("p").text() == "X" ||$(this).find("p").text() == "O"){
     } else {
       var currTurn = updateTurn(currentTurn);
-      var currHeader = updateTurn(currentTurn+1);
+      var currHeader = updateTurn(currentTurn);
       $("h5").text("Current Turn: " + currHeader);
       $(this).find("p").text(currTurn);
-      if(displayedBoard.checkForWin() == true){
-        alert(currTurn + " Wins!");
+      if(currentTurn%2 == 0){
+        easyAI("O");
+      } else if(currentTurn%2 != 0){
+        easyAI("X");
       }
-      currentTurn ++;
+      currentTurn += 2;
     }
     writeBoard();
+    displayBoard();
+    if(displayedBoard.checkForWin() && currentTurn%2 != 0){
+      alert(updateTurn(currentTurn + 1) + " Wins!");
+    } else if(displayedBoard.checkForWin() && currentTurn%2 == 0){
+      alert(updateTurn(currentTurn + 1 ) + " Wins!");
+    }
   });
 });
-var one = new Board()
-one.move(0,0,0);
-one.move(0,1,0);
-one.move(0,2,0);
-var two = new Board()
-two.move(0,0,1);
-two.move(0,1,0);
-two.move(0,2,1);
-var three = new Board()
-three.move(0,0,1);
-three.move(1,1,0);
-three.move(2,2,1);
-var four = new Board()
-four.move(0,0,1);
-four.move(1,1,1);
-four.move(2,2,1);
-var five = new Board()
-five.move(2,0,1);
-five.move(1,1,0);
-five.move(0,2,1);
-var six = new Board()
-six.move(2,0,1);
-six.move(1,1,1);
-six.move(0,2,1);
-var seven = new Board()
-seven.move(0,0,1);
-seven.move(1,0,0);
-seven.move(2,0,1);
-var eight = new Board()
-eight.move(0,0,1);
-eight.move(1,1,1);
-eight.move(2,2,1);
+
+
+//Debuggings
+// Board.prototype.Highlight = function(row, col) {
+//   console.log("XY coord are: " +row+ ", "+col)
+//   console.log("THE VALUE IS: "+ this.board[row][col]);
+// }
+//
+// var oneBoard = new Board();
+//
+// oneBoard.move(1,0,0);
+// oneBoard.move(1,1,0);
+// oneBoard.move(1,2,0);
+//
+// var twoBoard = new Board();
+//
+// twoBoard.move(0,1,0);
+// twoBoard.move(1,1,0);
+// twoBoard.move(2,1,0);
+//
+// var threeBoard = new Board();
+//
+// threeBoard.move(0,2,0);
+// threeBoard.move(1,2,0);
+// threeBoard.move(2,2,0);
+//
+// var fourBoard = new Board();
+//
+// fourBoard.move(0,0,0);
+// fourBoard.move(0,1,0);
+// fourBoard.move(0,2,1);
+//
+// oneBoard.checkForWin();
+// twoBoard.checkForWin();
+// threeBoard.checkForWin();
+// fourBoard.checkForWin();
