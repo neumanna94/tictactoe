@@ -1,3 +1,7 @@
+body {
+background-color: grey;
+}
+
 .jumbotron {
   text-align:center;
 }
@@ -17,7 +21,7 @@
   text-align: center;
   width: 1000px;
   height: 200px;
-  background-color: grey;
+  background-color: #ff6600;
   color: white;
 }
 
@@ -31,6 +35,9 @@
 }
 
 h4 {
+  text-align: center;
+}
+h5 {
   text-align: center;
 }
 
