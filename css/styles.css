@@ -4,9 +4,9 @@
 .jumbotron li {
   float: left;
   list-style-type: none;
-  margin-top: 1em;
-  margin-left: 8em;
-  padding-left: 2em;
+  margin-top: 1%;
+  margin-left: 18%;
+  padding-left: 2%;
 }
 .jumbotron li:hover {
   color:red;
@@ -15,7 +15,26 @@
 .col-md-4 {
   float: left;
   text-align: center;
-  border-color: black;
-  border-width: 10px;
-  background-color: red;
+  width: 1000px;
+  height: 200px;
+  background-color: grey;
+  color: white;
+}
+
+.col-md-4 p {
+  margin-top: 20%;
+  font-size: 50px;
+}
+.form-control {
+  width: 25%;
+  margin-bottom: 1%
+}
+
+h4 {
+  text-align: center;
+}
+
+.restart {
+  margin-top: 2%;
+  margin-left: 45%;
 }

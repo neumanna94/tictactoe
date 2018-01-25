@@ -1,7 +1,5 @@
-
-function Player(playerNameIn, chararacter){
+function Player(playerNameIn){
   this.name = playerNameIn;
-  this.charForGame = character;
   this.wins = 0;
   this.losses = 0;
   this.draws = 0;
@@ -26,35 +24,31 @@ Board.prototype.checkForWin=function(){
   var rowState = true;
   var colState = true;
   for(var i = 0; i < 3; i ++){
-    console.log("First Element:" +  this.board[2][0] + "other:" + this.board[2-i][i]);
-    console.log();
     //Check Diagonals
     if(this.board[0][0] != this.board[i][i] || this.board[0][0] != null){
       lDiagonal = false;
     }
-    if(this.board[2][0] != this.board[2-i][i] || this.board[2][0] !=null){
+    if(this.board[2][0] != this.board[2-i][i] || this.board[2][0]!=null){
       rDiagonal= false;
     }
     for(var j = 1; j < 3; j ++){
+      if(lDiagonal || rDiagonal){
+        return true;
+      }
       //Check Rows
-      if(this.board[i][0] != this.board[i][j]){
+      if(this.board[i][0] != this.board[i][j] || this.board[i][0] != null){
         rowState = false;
       //Check Columns
       }
-      if(this.board[0][i] != this.board[j][i]){
+      if(this.board[0][i] != this.board[j][i] || this.board[0][i] !=null){
         colState = false;
       }
     }
-  }
-  console.log(lDiagonal)
-  console.log(rDiagonal);
-  console.log(rowState);
-  console.log(colState);
-    if(lDiagonal || rDiagonal || rowState || colState){
+    if(colState || rowState){
       return true;
-    } else {
-      return false;
     }
+  }
+  return false;
 }
 function createMatrix(rows,columns){
   var outputMatrix = [];
@@ -74,3 +68,42 @@ function checkRowForWin(inputArray){
   }
   return inputArray[0];
 }
+
+
+var displayedBoard = new Board();
+
+  var boardOne = new Board();
+  boardOne.move(0,0,0);
+  boardOne.move(0,1,0);
+  boardOne.move(0,2,0);
+
+  var boardTwo = new Board();
+  boardTwo.move(0,0,0);
+  boardTwo.move(1,1,0);
+  boardTwo.move(2,2,0);
+
+  var boardThree = new Board();
+  boardThree.move(0,0,0);
+  boardThree.move(1,0,0);
+  boardThree.move(2,0,0);
+
+  var boardFour = new Board();
+  boardFour.move(0,0,1);
+  boardFour.move(1,0,1);
+  boardFour.move(2,0,0);
+  var boardFive = new Board();
+  boardFive.move(0,0,0);
+  boardFive.move(1,0,0);
+  boardFive.move(2,0,1);
+  var boardSix = new Board();
+  boardSix.move(0,0,1);
+  boardSix.move(1,0,1);
+  boardSix.move(2,0,1);
+  var boardSeven = new Board();
+  boardSeven.move(2,0,0);
+  boardSeven.move(1,1,0);
+  boardSeven.move(0,2,1);
+  var boardEight = new Board();
+  boardEight.move(2,0,1);
+  boardEight.move(1,1,0);
+  boardEight.move(0,2,1);
